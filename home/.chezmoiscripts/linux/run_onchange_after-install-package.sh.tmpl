@@ -1,0 +1,52 @@
+{{ if or (eq .osid "linux-ubuntu") (eq .osid "linux-debian") (eq .osid "linux-arch") -}}
+
+{{ if or (eq .osid "linux-ubuntu") (eq .osid "linux-debian") -}}
+{{ $packages := list
+   "bat"
+   "build-essential"
+   "curl"
+   "fd-find"
+   "fzf"
+   "git"
+   "jq"
+   "ripgrep"
+   "uv"
+   "zsh" -}}
+
+#!/bin/bash
+set -eufo pipefail
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+  {{ $sudo = "" -}}
+{{ end -}}
+
+{{ $sudo }}apt-get update
+{{ $sudo }}apt-get install -y {{ $packages | join " " }}
+
+{{ else if eq .osid "linux-arch" -}}
+
+#!/bin/bash
+set -eufo pipefail
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+  {{ $sudo = "" -}}
+{{ end -}}
+
+{{ $packages := list
+  "bat"
+  "curl"
+  "fd"
+  "fzf"
+  "git"
+  "jq"
+  "uv"
+  "ripgrep" -}}
+
+{{ $sudo }}pacman -Syu --noconfirm
+{{ $sudo }}pacman -S --noconfirm {{ $packages | join " " }}
+
+{{ end -}}
+{{ end -}}
+

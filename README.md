@@ -27,15 +27,15 @@ For a better user experience, consider installing a Nerd Font. See the [referenc
 
 ### Configuration
 
- - [ ] zoxide
+ - [x] bat
+ - [x] direnv
+ - [x] fd
+ - [x] fzf
+ - [x] ghq
+ - [x] neovim
  - [x] oh-my-zsh
  - [x] p10k
- - [x] neovim
- - [ ] atuin
- - [ ] direnv
- - [ ] bat
- - [ ] fzf
- - [ ] tmux/tmux-resurrect
- - [ ] ghq
- - [ ] ripgrep
- - [ ] uv
+ - [x] ripgrep
+ - [x] tmux
+ - [x] uv
+ - [x] zoxide

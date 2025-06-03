@@ -6,6 +6,11 @@
 {{- $chezmoiForce := or (has "--force" .chezmoi.args) (has "--force=true" .chezmoi.args) -}}
 {{- $interactive := and stdinIsATTY (not $chezmoiForce) -}}
 
+{{- $osID := .chezmoi.os -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
 {{- if $interactive -}}
 {{-   $email := promptString "Enter email" -}}
 {{-   if regexMatch "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$" $email -}}
@@ -27,6 +32,7 @@
   work = {{ $work }}
   ephemeral = {{ $ephemeral }}
   personal = {{ $personal }}
+  osid = {{ $osID | quote }}
   zshPlugins = [
       "vi-mode",
       "zsh-syntax-highlighting",
