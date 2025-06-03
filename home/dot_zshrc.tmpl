@@ -22,7 +22,52 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HIST_STAMPS="yyyy-mm-dd"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+{{- range .zshPlugins }}
+  {{ . }}
+{{- end }}
+)
+
 source $ZSH/oh-my-zsh.sh
+
+# Alias
+alias g=git
+
+{{- if lookPath "bat" }}
+alias cat=bat
+{{- else if lookPath "batcat" }}
+alias cat=batcat
+{{- end }}
+
+{{- if lookPath "fdfind" }}
+alias fd=fdfind
+{{- end }}
+
+{{ if stat (printf "%s/.local/bin/nvim" .chezmoi.homeDir) -}}
+export EDITOR=$HOME/.local/bin/nvim
+{{ else if lookPath "nvim" -}}
+export EDITOR=nvim
+{{ else -}}
+export EDITOR=vim
+{{ end -}}
+
+{{ if stat (printf "%s/.local/bin/nvim" .chezmoi.homeDir) -}}
+export EDITOR=$HOME/.local/bin/nvim
+{{ else if lookPath "nvim" -}}
+export EDITOR=nvim
+{{ else -}}
+export EDITOR=vim
+{{ end -}}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
