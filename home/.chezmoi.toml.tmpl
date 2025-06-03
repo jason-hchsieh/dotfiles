@@ -1,0 +1,30 @@
+{{-  $username := "jasonhch" -}}
+{{-  $email := "jason71319jason@gmail.com" -}} 
+{{-  $work := false -}}
+{{-  $ephemeral := true -}}
+
+{{- $chezmoiForce := or (has "--force" .chezmoi.args) (has "--force=true" .chezmoi.args) -}}
+{{- $interactive := and stdinIsATTY (not $chezmoiForce) -}}
+
+{{- if $interactive -}}
+{{-   $email := promptString "Enter email" -}}
+{{-   if regexMatch "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$" $email -}}
+{{-     writeToStdout (printf "✅ Email set as '%s'\n" $email) -}}
+{{-   else -}}
+{{-     writeToStdout (printf "❌ '%s' is an invalid email\n" $email) -}}
+{{-     exit 1 -}}
+{{-   end -}}
+{{-   $username := promptString "Enter user name" -}}
+{{-   $work := promptBool "Is this a work machine" -}}
+{{-   $ephemeral := promptBool "Is this machine ephemeral" -}}
+{{- end -}}
+
+{{- $personal := not $work -}}
+
+[data]
+  username = {{ $username | quote }}
+  email = {{ $email | quote }}
+  work = {{ $work }}
+  ephemeral = {{ $ephemeral }}
+  personal = {{ $personal }}
+
