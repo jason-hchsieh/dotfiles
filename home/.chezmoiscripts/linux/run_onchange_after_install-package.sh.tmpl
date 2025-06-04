@@ -1,3 +1,4 @@
+{{ if .sudoer }}
 {{ if or (eq .osid "linux-ubuntu") (eq .osid "linux-debian") (eq .osid "linux-arch") -}}
 
 {{ if or (eq .osid "linux-ubuntu") (eq .osid "linux-debian") -}}
@@ -49,4 +50,4 @@ set -eufo pipefail
 
 {{ end -}}
 {{ end -}}
-
+{{ end -}}

@@ -1,3 +1,4 @@
+{{ if eq .osid "darwin" }}
 #!/bin/bash
 
 set -eufo pipefail
@@ -18,3 +19,4 @@ brew bundle --file=/dev/stdin <<EOF
 brew "{{ . }}"
 {{ end -}}
 EOF
+{{ end }}
