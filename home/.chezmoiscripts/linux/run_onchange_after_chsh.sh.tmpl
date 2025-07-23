@@ -1,9 +1,0 @@
-{{- if (not .ephemeral) -}}
-#!/bin/bash
-
-set -eufo pipefail
-
-if grep -q "^$USER:" /etc/passwd; then
-  chsh -s /usr/bin/zsh
-fi
-{{ end -}}
