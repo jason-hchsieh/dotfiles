@@ -10,6 +10,18 @@ hch's dotfiles, managed with [`chezmoi`](https://chezmoi.io)
   chezmoi init --apply jason-hchsieh
   ```
 
+- Update from repo:
+
+  ```sh
+  chezmoi update
+  ```
+
+- Apply local changes:
+
+  ```sh
+  chezmoi apply
+  ```
+
 ## Dependencies
 
 - oh-my-zsh
