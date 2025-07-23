@@ -1,0 +1,5 @@
+# Do not print the filename as a heading
+--no-heading
+
+# Sort the result by file path in lexicographical order
+--sort=path
