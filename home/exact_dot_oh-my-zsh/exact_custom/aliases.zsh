@@ -1,5 +1,8 @@
+# git (most git command aliases defined in $HOME/.config/git/config)
+alias g="git"
+
 # editor
-alias vim='nvim'
+alias vim="nvim"
 
 # safety
 alias rm="rm -i"       # prompt before remove

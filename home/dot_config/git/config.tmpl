@@ -7,7 +7,9 @@
 	statusHints = false
 [alias]
 	a = add
+        al = "!git config --get-regexp ^alias\\."
 	ap = add -p
+        au = add -u
 	amc = am --continue
 	b = branch
 	bm = branch --merged
@@ -45,14 +47,8 @@
 	sh = "!git log -n 16 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git show"
 	ss = "commit --message 'chore: snapshot' --no-gpg-sign"
 	su = submodule update
+        suir = submodule update --init --recursive
 	wd = diff --patience --word-diff
-	# https://golang.org/doc/contribute.html
-	change = codereview change
-	gofmt = codereview gofmt
-	mail = codereview mail
-	pending = codereview pending
-	submit = codereview submit
-	sync = codereview sync
 [branch]
 	sort = -committerdate
 [column]
