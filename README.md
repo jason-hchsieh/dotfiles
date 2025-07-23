@@ -1,12 +1,14 @@
 # Dotfiles
 
-HCH's dotfiles, managed with [`chezmoi`](https://chezmoi.io)
+hch's dotfiles, managed with [`chezmoi`](https://chezmoi.io)
 
-Install:
+## Quick Start
 
-```sh
-chezmoi init jason-hchsieh
-```
+- Set up on new machine:
+
+  ```sh
+  chezmoi init --apply jason-hchsieh
+  ```
 
 ## Dependencies
 
@@ -33,7 +35,6 @@ For a better user experience, consider installing a Nerd Font. See the [referenc
 
 ### Configuration
 
-- [x] bat
 - [x] fd
 - [x] fzf
 - [x] neovim
