@@ -7,12 +7,14 @@ hch's dotfiles, managed with [`chezmoi`](https://chezmoi.io)
 - **One-line setup** (installs chezmoi + dotfiles):
 
   ```sh
-  # Using curl
+  # Using curl (Linux/macOS/WSL/Git Bash)
   curl -fsSL https://raw.githubusercontent.com/jason-hchsieh/dotfiles/main/scripts/setup.sh | bash
   
-  # Using wget
+  # Using wget (Linux/macOS/WSL/Git Bash)
   wget -qO- https://raw.githubusercontent.com/jason-hchsieh/dotfiles/main/scripts/setup.sh | bash
   ```
+
+  **Note**: For Windows PowerShell users, use WSL, Git Bash, or wait for `setup.ps1` (coming soon).
 
 - Set up on new machine (if chezmoi is already installed):
 

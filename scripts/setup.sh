@@ -148,8 +148,15 @@ main() {
     echo "🔍 Detected OS: $(detect_os)"
     
     if is_powershell; then
-        echo "🐚 PowerShell detected"
-        echo "⚠️  Note: This script is optimized for bash/zsh. Consider running in a Unix-like shell."
+        echo "❌ PowerShell detected - this bash script is not compatible!"
+        echo ""
+        echo "Please use one of these alternatives:"
+        echo "  1. Run in WSL (Windows Subsystem for Linux)"
+        echo "  2. Use Git Bash"
+        echo "  3. Use setup.ps1 (PowerShell script - coming soon)"
+        echo ""
+        echo "Exiting..."
+        exit 1
     fi
     
     install_chezmoi
