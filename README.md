@@ -4,7 +4,17 @@ hch's dotfiles, managed with [`chezmoi`](https://chezmoi.io)
 
 ## Quick Start
 
-- Set up on new machine:
+- **One-line setup** (installs chezmoi + dotfiles):
+
+  ```sh
+  # Using curl
+  curl -fsSL https://raw.githubusercontent.com/jason-hchsieh/dotfiles/main/scripts/setup.sh | bash
+  
+  # Using wget
+  wget -qO- https://raw.githubusercontent.com/jason-hchsieh/dotfiles/main/scripts/setup.sh | bash
+  ```
+
+- Set up on new machine (if chezmoi is already installed):
 
   ```sh
   chezmoi init --apply jason-hchsieh
@@ -28,6 +38,8 @@ hch's dotfiles, managed with [`chezmoi`](https://chezmoi.io)
 - p10k
 - neovim
   - luarocks
+
+## MacOS
 
 ## Font
 

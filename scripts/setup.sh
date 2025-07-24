@@ -112,18 +112,9 @@ add_to_path() {
 setup_dotfiles() {
     echo "🏗️  Initializing chezmoi..."
     
-    # Get the current repository URL
-    if [[ -d ".git" ]]; then
-        REPO_URL=$(git remote get-url origin 2>/dev/null || echo "")
-    else
-        echo "❌ Error: This script should be run from a git repository"
-        exit 1
-    fi
-    
-    if [[ -z "$REPO_URL" ]]; then
-        echo "❌ Error: Could not determine git repository URL"
-        exit 1
-    fi
+    # Use GitHub username for dotfiles repository
+    GITHUB_USERNAME="jason-hchsieh"
+    REPO_URL="https://github.com/${GITHUB_USERNAME}/dotfiles.git"
     
     echo "📂 Repository: $REPO_URL"
     
