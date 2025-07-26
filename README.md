@@ -9,7 +9,9 @@ hch's dotfiles, managed with [`chezmoi`](https://chezmoi.io)
   ```sh
   # Using curl (Linux/macOS/WSL/Git Bash)
   curl -fsSL https://raw.githubusercontent.com/jason-hchsieh/dotfiles/main/scripts/setup.sh | bash
-  
+  ```
+
+  ```sh
   # Using wget (Linux/macOS/WSL/Git Bash)
   wget -qO- https://raw.githubusercontent.com/jason-hchsieh/dotfiles/main/scripts/setup.sh | bash
   ```
