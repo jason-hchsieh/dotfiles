@@ -1,0 +1,23 @@
+FROM archlinux:latest
+
+# Install base dependencies
+RUN pacman -Syu --noconfirm && pacman -S --noconfirm --needed \
+    git \
+    zsh \
+    curl \
+    && pacman -Scc --noconfirm
+
+# Install chezmoi
+RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+# Install bats-core
+RUN git clone --depth 1 https://github.com/bats-core/bats-core.git /opt/bats
+ENV PATH="/opt/bats/bin:${PATH}"
+
+# Create non-root test user
+RUN useradd --create-home --shell /bin/zsh testuser
+
+WORKDIR /home/testuser
+USER testuser
+
+# vim: set filetype=dockerfile:
