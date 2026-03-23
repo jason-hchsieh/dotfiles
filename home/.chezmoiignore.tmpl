@@ -7,3 +7,14 @@
 .oh-my-zsh/plugins/**
 .oh-my-zsh/templates/**
 .oh-my-zsh/custom/themes/powerlevel10k/**/*.zwc
+
+# AI agent config files — ignore when the tool is not installed
+{{ if not (lookPath "claude") -}}
+.claude/settings.json
+{{ end -}}
+{{ if not (lookPath "codex") -}}
+.codex/**
+{{ end -}}
+{{ if not (lookPath "gemini") -}}
+.gemini/**
+{{ end -}}
