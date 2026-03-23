@@ -1,0 +1,71 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 9 * * 5'  # Weekly Friday run
+  workflow_dispatch:        # Manual trigger
+
+jobs:
+  template-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Install bats
+        run: |
+          git clone --depth 1 https://github.com/bats-core/bats-core.git /tmp/bats
+          sudo /tmp/bats/install.sh /usr/local
+
+      - name: Run template validation tests
+        run: bats tests/templates/test_templates.bats
+
+  e2e-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: brew install chezmoi
+
+      - name: Install bats
+        run: brew install bats-core
+
+      - name: Run e2e tests
+        run: bats tests/e2e/test_apply.bats
+
+  e2e-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t chezmoi-test-ubuntu -f tests/docker/Dockerfile.ubuntu .
+
+      - name: Run e2e tests in container
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/dotfiles:ro" \
+            chezmoi-test-ubuntu \
+            bash -c "cd /dotfiles && bats tests/e2e/test_apply.bats"
+
+  e2e-arch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t chezmoi-test-arch -f tests/docker/Dockerfile.arch .
+
+      - name: Run e2e tests in container
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/dotfiles:ro" \
+            chezmoi-test-arch \
+            bash -c "cd /dotfiles && bats tests/e2e/test_apply.bats"
