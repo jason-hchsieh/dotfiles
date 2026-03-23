@@ -19,7 +19,7 @@ Usage: tests/run.sh [OPTIONS]
 
 Options:
   --help, -h     Show this help message
-  --e2e          Run e2e tests (in addition to fast tests)
+  --e2e          Run e2e tests only
   --all          Run all test tiers (fast + e2e)
 
 By default, runs fast tier only: tests/templates/test_templates.bats
@@ -60,7 +60,7 @@ case "$mode" in
     bats tests/templates/test_templates.bats
     ;;
   e2e)
-    bats tests/templates/test_templates.bats tests/e2e/test_apply.bats
+    bats tests/e2e/test_apply.bats
     ;;
   all)
     bats tests/templates/test_templates.bats tests/e2e/test_apply.bats
