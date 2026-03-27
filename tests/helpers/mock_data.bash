@@ -5,6 +5,8 @@
 # Baseline values present in every generated config.
 readonly MOCK_USERNAME="testuser"
 readonly MOCK_EMAIL="test@example.com"
+readonly MOCK_WORK_USERNAME="testuser-work"
+readonly MOCK_WORK_EMAIL="test@work.example.com"
 readonly MOCK_EPHEMERAL="true"
 readonly MOCK_ZSH_PLUGINS='["vi-mode", "zsh-syntax-highlighting"]'
 
@@ -36,6 +38,13 @@ generate_chezmoi_config() {
         personal="true"
     fi
 
+    local work_username=""
+    local work_email=""
+    if [[ "${work}" == "true" ]]; then
+        work_username="${MOCK_WORK_USERNAME}"
+        work_email="${MOCK_WORK_EMAIL}"
+    fi
+
     cat > "${output_path}" <<EOF
 [data]
   username = "${MOCK_USERNAME}"
@@ -45,6 +54,8 @@ generate_chezmoi_config() {
   personal = ${personal}
   osid = "${osid}"
   sudoer = ${sudoer}
+  workUsername = "${work_username}"
+  workEmail = "${work_email}"
   zshPlugins = [
       "vi-mode",
       "zsh-syntax-highlighting",

@@ -120,7 +120,10 @@ teardown_file() {
 
 @test "expected files exist" {
     [ -f "${TEST_HOME}/.zshrc" ]
-    [ -f "${TEST_HOME}/.zprofile" ]
+    # .zprofile is only generated on macOS (requires Homebrew)
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+        [ -f "${TEST_HOME}/.zprofile" ]
+    fi
     [ -f "${TEST_HOME}/.config/git/config" ]
     [ -f "${TEST_HOME}/.claude/CLAUDE.md" ]
     [ -f "${TEST_HOME}/.p10k.zsh" ]
@@ -163,8 +166,9 @@ teardown_file() {
     run chezmoi doctor \
         --config "${CONFIG_FILE}"
     # chezmoi doctor may exit non-zero when optional tools are absent;
-    # we only care that no lines contain the word "error" (case-insensitive).
+    # filter out known-optional tool warnings (age, gpg, secret, etc.)
+    # and only fail on unexpected error lines.
     local errors
-    errors="$(echo "${output}" | grep -i "^error" || true)"
+    errors="$(echo "${output}" | grep -i "^error" | grep -iv -e "age" -e "gpg" -e "secret" -e "1password" -e "bitwarden" -e "dashlane" -e "gopass" -e "keepass" -e "lastpass" -e "pass " -e "vault" -e "vimdiff" -e "pinentry" || true)"
     [ -z "${errors}" ]
 }

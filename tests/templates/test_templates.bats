@@ -106,6 +106,18 @@ _render_gemini_symlink() {
     render_template "${config}" "${CHEZMOI_SOURCE}/dot_gemini/symlink_GEMINI.md.tmpl"
 }
 
+_render_git_config_personal() {
+    local config="${TEST_DIR}/chezmoi.toml"
+    generate_chezmoi_config "$1" "$2" "$3" "${config}"
+    render_template "${config}" "${CHEZMOI_SOURCE}/dot_config/git/config-personal.tmpl"
+}
+
+_render_git_config_work() {
+    local config="${TEST_DIR}/chezmoi.toml"
+    generate_chezmoi_config "$1" "$2" "$3" "${config}"
+    render_template "${config}" "${CHEZMOI_SOURCE}/dot_config/git/config-work.tmpl"
+}
+
 # ---------------------------------------------------------------------------
 # Tests — one @test block per template; each iterates all 12 combos.
 # ---------------------------------------------------------------------------
@@ -148,4 +160,12 @@ _render_gemini_symlink() {
 
 @test "dot_gemini/symlink_GEMINI.md.tmpl renders without error across all combos" {
     all_combos _render_gemini_symlink
+}
+
+@test "dot_config/git/config-personal.tmpl renders without error across all combos" {
+    all_combos _render_git_config_personal
+}
+
+@test "dot_config/git/config-work.tmpl renders without error across all combos" {
+    all_combos _render_git_config_work
 }
