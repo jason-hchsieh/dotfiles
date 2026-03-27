@@ -1,5 +1,7 @@
 {{-  $username := .chezmoi.username -}}
 {{-  $email := "jason71319jason@gmail.com" -}}
+{{-  $workUsername := "" -}}
+{{-  $workEmail := "" -}}
 {{-  $work := false -}}
 {{-  $ephemeral := true -}}
 {{-  $sudoer := true -}}
@@ -22,6 +24,16 @@
 {{-     exit 1 -}}
 {{-   end -}}
 {{-   $work = promptBool "Is this a work machine [y/n]" $work -}}
+{{-   if $work -}}
+{{-     $workUsername = promptString "Enter work user name" $workUsername -}}
+{{-     $workEmail = promptString "Enter work email" $workEmail -}}
+{{-     if regexMatch "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$" $workEmail -}}
+{{-       writeToStdout (printf "✅ Work email set as '%s'\n" $workEmail) -}}
+{{-     else -}}
+{{-       writeToStdout (printf "❌ '%s' is an invalid email\n" $workEmail) -}}
+{{-       exit 1 -}}
+{{-     end -}}
+{{-   end -}}
 {{-   $ephemeral = promptBool "Is this machine ephemeral [y/n]" $ephemeral -}}
 {{-   $sudoer = promptBool "Are you sudoer [y/n]" $sudoer -}}
 {{- end -}}
@@ -36,6 +48,8 @@
   personal = {{ $personal }}
   osid = {{ $osID | quote }}
   sudoer = {{ $sudoer }}
+  workUsername = {{ $workUsername | quote }}
+  workEmail = {{ $workEmail | quote }}
   zshPlugins = [
       "vi-mode",
       "zsh-syntax-highlighting",

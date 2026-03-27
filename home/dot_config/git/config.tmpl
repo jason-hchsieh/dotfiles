@@ -3,9 +3,12 @@
 {{- $gitMajor := index $gitVersionParts 0 | atoi -}}
 {{- $gitMinor := index $gitVersionParts 1 | atoi -}}
 {{- $supportsZdiff3 := or (gt $gitMajor 2) (and (eq $gitMajor 2) (ge $gitMinor 35)) -}}
-[user]
-  name = {{ .username }}
-  email = {{ .email }}
+[includeIf "gitdir:~/personal/"]
+  path = ~/.config/git/config-personal
+{{- if .work }}
+[includeIf "gitdir:~/work/"]
+  path = ~/.config/git/config-work
+{{- end }}
 [advice]
   addEmptyPathspec = false
   pushNonFastForward = false
@@ -28,6 +31,8 @@
   cob = checkout -b
   com = checkout master
   cp = cherry-pick
+  cpc = cherry-pick --continue
+  cpb = cherry-pick --abort
   d = diff
   dc = diff --cached
   dom = diff origin/master
@@ -36,8 +41,9 @@
   g = grep --line-number
   mbhom = merge-base HEAD origin/master
   mff = merge --ff-only
-  ol = log --pretty=oneline
-  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  l = log
+  lol = log --pretty=oneline
+  lop = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   p = push
   pf = push --force-with-lease
   prb = pull --rebase
