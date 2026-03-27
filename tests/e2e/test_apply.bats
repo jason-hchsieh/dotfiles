@@ -75,21 +75,21 @@ setup_file() {
 EOF
 
     # Run chezmoi init with the source directory.
+    INIT_EXIT=0
     chezmoi init \
         --config "${CONFIG_FILE}" \
         --source "${CHEZMOI_SOURCE}" \
-        2>"${E2E_DIR}/init.stderr"
-    INIT_EXIT=$?
+        2>"${E2E_DIR}/init.stderr" || INIT_EXIT=$?
     export INIT_EXIT
 
     # Apply to the isolated TEST_HOME; skip scripts to avoid side effects.
+    APPLY_EXIT=0
     chezmoi apply \
         --config "${CONFIG_FILE}" \
         --source "${CHEZMOI_SOURCE}" \
         --destination "${TEST_HOME}" \
         --exclude=scripts \
-        2>"${E2E_DIR}/apply.stderr"
-    APPLY_EXIT=$?
+        2>"${E2E_DIR}/apply.stderr" || APPLY_EXIT=$?
     export APPLY_EXIT
 }
 
