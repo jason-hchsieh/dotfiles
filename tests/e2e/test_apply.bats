@@ -169,12 +169,9 @@ teardown_file() {
     # filter out known-optional tool warnings (age, gpg, secret, etc.)
     # and only fail on unexpected error lines.
     local errors
-    errors="$(echo "${output}" | grep -i "^error" | grep -iv -e "age" -e "gpg" -e "secret" -e "1password" -e "bitwarden" -e "dashlane" -e "gopass" -e "keepass" -e "lastpass" -e "pass " -e "vault" -e "vimdiff" -e "pinentry" || true)"
-    if [ -n "${errors}" ]; then
-        echo "chezmoi doctor full output:" >&2
-        echo "${output}" >&2
-        echo "---" >&2
-        echo "unfiltered errors: ${errors}" >&2
-    fi
+    # In CI, chezmoi doctor reports errors for source-dir and working-tree
+    # because ~/.local/share/chezmoi doesn't exist (we use --source flag).
+    # Filter these along with optional tool warnings.
+    errors="$(echo "${output}" | grep -i "^error" | grep -iv -e "source-dir" -e "working-tree" -e "age" -e "gpg" -e "secret" -e "1password" -e "bitwarden" -e "dashlane" -e "gopass" -e "keepass" -e "lastpass" -e "pass " -e "vault" -e "vimdiff" -e "pinentry" || true)"
     [ -z "${errors}" ]
 }
