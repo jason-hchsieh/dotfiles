@@ -170,5 +170,11 @@ teardown_file() {
     # and only fail on unexpected error lines.
     local errors
     errors="$(echo "${output}" | grep -i "^error" | grep -iv -e "age" -e "gpg" -e "secret" -e "1password" -e "bitwarden" -e "dashlane" -e "gopass" -e "keepass" -e "lastpass" -e "pass " -e "vault" -e "vimdiff" -e "pinentry" || true)"
+    if [ -n "${errors}" ]; then
+        echo "chezmoi doctor full output:" >&2
+        echo "${output}" >&2
+        echo "---" >&2
+        echo "unfiltered errors: ${errors}" >&2
+    fi
     [ -z "${errors}" ]
 }
